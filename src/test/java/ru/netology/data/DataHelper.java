@@ -3,6 +3,7 @@ package ru.netology.data;
 import com.github.javafaker.Faker;
 import lombok.Value;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -19,13 +20,25 @@ public class DataHelper {
         private String number;
     }
 
-    public static CardNumber getCardNumberApproved() {
-        return new CardNumber("1111 2222 3333 4444");
+    public static CardNumber getCardNumber(String status) {
+        CardNumber[] cards = {new CardNumber("1111 2222 3333 4444"), new CardNumber("5555 6666 7777 8888")};
+        CardNumber result = cards[0];
+        if (status.equals("APPROVED")) {
+            result = cards[0];
+        }
+        if (status.equals("DECLINED")) {
+            result = cards[1];
+        }
+        return result;
     }
 
-    public static CardNumber getCardNumberDeclined() {
-        return new CardNumber("5555 6666 7777 8888");
-    }
+//    public static CardNumber getCardNumberApproved() {
+//        return new CardNumber("1111 2222 3333 4444");
+//    }
+//
+//    public static CardNumber getCardNumberDeclined() {
+//        return new CardNumber("5555 6666 7777 8888");
+//    }
 
     public static CardNumber getCardNumberInvalid() {
         return new CardNumber(valueOf(faker.number().numberBetween(1, 15)));
@@ -33,7 +46,7 @@ public class DataHelper {
 
     @Value
     public static class ExpirationDate {
-        private String months;
+        private String month;
         private String year;
     }
 
@@ -53,18 +66,18 @@ public class DataHelper {
     }
 
     public static ExpirationDate generatePastMonth() {
-        int currentMonth = Integer.parseInt(LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("MM")));
+        String currentMonth = LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("MM"));
         int year = 0;
-        if (currentMonth > Integer.parseInt(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")))) {
+        if (Integer.parseInt(currentMonth) > Integer.parseInt(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")))) {
           year = 1;
         }
-        return new ExpirationDate(valueOf(currentMonth),
+        return new ExpirationDate(currentMonth,
                 LocalDate.now().minusYears(year).format(DateTimeFormatter.ofPattern("YY")));
     }
 
     public static ExpirationDate generatePastYear() {
         return new ExpirationDate(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")),
-                LocalDate.now().minusYears(faker.number().numberBetween(1, 22)).format(DateTimeFormatter.ofPattern("YY")));
+                LocalDate.now().minusYears(1).format(DateTimeFormatter.ofPattern("YY")));
     }
 
     public static ExpirationDate generateInvalidDateFrom1Dijit() {
@@ -72,9 +85,9 @@ public class DataHelper {
                 faker.numerify("#"));
     }
 
-    public static int invalidMonth() {
+    public static String invalidMonth() {
         int month = faker.number().numberBetween(13, 99);
-        return month;
+        return valueOf(month);
     }
 
     @Value
@@ -118,9 +131,25 @@ public class DataHelper {
 
     @Value
     public static class Payment_entity {
-        String amount;
-        String created;
+        String id;
+        int amount;
+        Date created;
         String status;
         String transaction_id;
+    }
+
+    @Value
+    public static class Card {
+        String numberCard;
+        String month;
+        String year;
+        String holder;
+        String cvc;
+    }
+
+    public static Card getCard(String status) {
+        Card card = new Card(getCardNumber(status).getNumber(), generateValidDate().getMonth(), generateValidDate().getYear(),
+                generateValidName().getName(), generateCvcCode().getCode());
+        return card;
     }
 }
