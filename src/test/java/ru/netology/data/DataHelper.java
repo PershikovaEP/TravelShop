@@ -141,15 +141,15 @@ public class DataHelper {
     @Value
     public static class Card {
         String numberCard;
-        String month;
-        String year;
+        int month;
+        int year;
         String holder;
-        String cvc;
+        int cvc;
     }
 
     public static Card getCard(String status) {
-        Card card = new Card(getCardNumber(status).getNumber(), generateValidDate().getMonth(), generateValidDate().getYear(),
-                generateValidName().getName(), generateCvcCode().getCode());
+        Card card = new Card(getCardNumber(status).getNumber(), Integer.parseInt(generateValidDate().getMonth()), Integer.parseInt(generateValidDate().getYear()),
+                generateValidName().getName(), Integer.parseInt(generateCvcCode().getCode()));
         return card;
     }
 }
