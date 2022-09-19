@@ -3,6 +3,7 @@ package ru.netology.data;
 import com.github.javafaker.Faker;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.sql.Date;
@@ -133,6 +134,7 @@ public class DataHelper {
 
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class PaymentEntity {
         String id;
         int amount;
@@ -141,18 +143,6 @@ public class DataHelper {
         String transaction_id;
     }
 
-    @Value
-    public static class Card {
-        String number;
-        int month;
-        int year;
-        String holder;
-        int cvc;
-    }
 
-    public static Card getCard(String status) {
-        Card card = new Card(getCardNumber(status).getNumber(), Integer.parseInt(generateValidDate().getMonth()), Integer.parseInt(generateValidDate().getYear()),
-                generateValidName().getName(), Integer.parseInt(generateCvcCode().getCode()));
-        return card;
-    }
+
 }

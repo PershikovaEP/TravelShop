@@ -3,27 +3,16 @@ package ru.netology.test;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.google.gson.Gson;
 import io.qameta.allure.selenide.AllureSelenide;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import ru.netology.data.APIHelper;
 import ru.netology.data.DataHelper;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ShopApiTest {
-
-    private static final RequestSpecification requestSpec = new RequestSpecBuilder()
-            .setBaseUri("http://localhost")
-            .setPort(8080)
-            .setAccept(ContentType.JSON)
-            .setContentType(ContentType.JSON)
-            .log(LogDetail.ALL)
-            .build();
 
     Gson gson = new Gson();
 
@@ -41,9 +30,9 @@ public class ShopApiTest {
    //21. Тестирование API(post) покупки тура по карте со статусом APPROVED
     @Test
     public void shouldBuyingTourCardApproved() {
-        var card = DataHelper.getCard("APPROVED");
+        var card = APIHelper.getCard("APPROVED");
         given()
-                .spec(requestSpec)
+                .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
                 .when()
                 .post("/api/v1/pay")
@@ -55,9 +44,9 @@ public class ShopApiTest {
     //22. Тестирование API(post) покупки тура по карте со статусом DECLINED
     @Test
     public void shouldFailureCardDeclined() {
-        var card = DataHelper.getCard("DECLINED");
+        var card = APIHelper.getCard("DECLINED");
         given()
-                .spec(requestSpec)
+                .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
                 .when()
                 .post("/api/v1/pay")
@@ -69,10 +58,10 @@ public class ShopApiTest {
     //23. Тестирование API(post) покупки тура при заполнение поля владелец на кириллице
     @Test
     public void shouldErrorWhenHolderCyrillic() {
-        var card = new DataHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), Integer.parseInt(DataHelper.generateValidDate().getMonth()),
-                Integer.parseInt(DataHelper.generateValidDate().getYear()), DataHelper.generateNameCyrillic().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
+        var card = new APIHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), DataHelper.generateValidDate().getMonth(),
+                DataHelper.generateValidDate().getYear(), DataHelper.generateNameCyrillic().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
         given()
-                .spec(requestSpec)
+                .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
                 .when()
                 .post("/api/v1/pay")
@@ -83,10 +72,10 @@ public class ShopApiTest {
     //24. Тестирование API(post) покупки тура при заполении номером карты, состоящим из менее 16 цифр
     @Test
     public void shouldErrorWhenInvalidNumberCard() {
-        var card = new DataHelper.Card(DataHelper.getCardNumberInvalid().getNumber(), Integer.parseInt(DataHelper.generateValidDate().getMonth()),
-                Integer.parseInt(DataHelper.generateValidDate().getYear()), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
+        var card = new APIHelper.Card(DataHelper.getCardNumberInvalid().getNumber(), DataHelper.generateValidDate().getMonth(),
+                DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
         given()
-                .spec(requestSpec)
+                .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
                 .when()
                 .post("/api/v1/pay")
@@ -97,10 +86,10 @@ public class ShopApiTest {
     //25. Тестирование API(post) покупки тура при заполении формы прошлым месяцем
     @Test
     public void shouldErrorPastMonth() {
-        var card = new DataHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), Integer.parseInt(DataHelper.generatePastMonth().getMonth()),
-                Integer.parseInt(DataHelper.generatePastMonth().getYear()), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
+        var card = new APIHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), DataHelper.generatePastMonth().getMonth(),
+                DataHelper.generatePastMonth().getYear(), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
         given()
-                .spec(requestSpec)
+                .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
                 .when()
                 .post("/api/v1/pay")
@@ -111,10 +100,10 @@ public class ShopApiTest {
     //26. Тестирование API(post) покупки тура при заполении формы прошлым годом
     @Test
     public void shouldErrorPastYear() {
-        var card = new DataHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), Integer.parseInt(DataHelper.generatePastYear().getMonth()),
-                Integer.parseInt(DataHelper.generatePastYear().getYear()), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
+        var card = new APIHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), DataHelper.generatePastYear().getMonth(),
+                DataHelper.generatePastYear().getYear(), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
         given()
-                .spec(requestSpec)
+                .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
                 .when()
                 .post("/api/v1/pay")
@@ -125,10 +114,10 @@ public class ShopApiTest {
     //27. Тестирование API(post) покупки тура при заполении cvc-кода из 2 цифр
     @Test
     public void shouldErrorInvalidCvcCode() {
-        var card = new DataHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), Integer.parseInt(DataHelper.generateValidDate().getMonth()),
-                Integer.parseInt(DataHelper.generateValidDate().getYear()), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateInvalidCvcCode().getCode()));
+        var card = new APIHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), DataHelper.generateValidDate().getMonth(),
+                DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateInvalidCvcCode().getCode()));
         given()
-                .spec(requestSpec)
+                .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
                 .when()
                 .post("/api/v1/pay")
