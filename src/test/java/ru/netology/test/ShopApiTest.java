@@ -43,7 +43,6 @@ public class ShopApiTest {
     public void shouldBuyingTourCardApproved() {
         var card = DataHelper.getCard("APPROVED");
         given()
-//                .baseUri("http://localhost:8080")
                 .spec(requestSpec)
                 .body(gson.toJson(card))
                 .when()
@@ -87,7 +86,6 @@ public class ShopApiTest {
         var card = new DataHelper.Card(DataHelper.getCardNumberInvalid().getNumber(), Integer.parseInt(DataHelper.generateValidDate().getMonth()),
                 Integer.parseInt(DataHelper.generateValidDate().getYear()), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
         given()
-//                .baseUri("http://localhost:8080")
                 .spec(requestSpec)
                 .body(gson.toJson(card))
                 .when()
@@ -130,7 +128,6 @@ public class ShopApiTest {
         var card = new DataHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), Integer.parseInt(DataHelper.generateValidDate().getMonth()),
                 Integer.parseInt(DataHelper.generateValidDate().getYear()), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateInvalidCvcCode().getCode()));
         given()
-//                .baseUri("http://localhost:8080")
                 .spec(requestSpec)
                 .body(gson.toJson(card))
                 .when()

@@ -1,6 +1,8 @@
 package ru.netology.data;
 
 import com.github.javafaker.Faker;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Value;
 
 import java.sql.Date;
@@ -129,8 +131,9 @@ public class DataHelper {
         return new Name("j");
     }
 
-    @Value
-    public static class Payment_entity {
+    @Data
+    @AllArgsConstructor
+    public static class PaymentEntity {
         String id;
         int amount;
         Date created;
@@ -140,7 +143,7 @@ public class DataHelper {
 
     @Value
     public static class Card {
-        String numberCard;
+        String number;
         int month;
         int year;
         String holder;

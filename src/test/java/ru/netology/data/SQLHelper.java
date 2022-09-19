@@ -25,11 +25,11 @@ public class SQLHelper {
     }
 
     @SneakyThrows
-    public static DataHelper.Payment_entity payment() {
+    public static DataHelper.PaymentEntity payment() {
         var codeSQL = "SELECT * FROM payment_entity ORDER BY created DESC LIMIT 1";
         try (var conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop",
                 "app", "pass")) {
-            var result = runner.query(conn, codeSQL, new BeanHandler<>(DataHelper.Payment_entity.class));
+            var result = runner.query(conn, codeSQL, new BeanHandler<>(DataHelper.PaymentEntity.class));
             return result;
         }
     }

@@ -53,7 +53,7 @@ public class ShopTest {
         buttonProceed.click();
         success.shouldBe(Condition.visible, Duration.ofSeconds(15)).shouldHave(Condition.exactText("Операция одобрена Банком."));
         String payment_id = SQLHelper.paymentOrder();
-        DataHelper.Payment_entity payment_entity = SQLHelper.payment();
+        DataHelper.PaymentEntity payment_entity = SQLHelper.payment();
         assertEquals(payment_id, payment_entity.getId());
         assertEquals("45000", valueOf(payment_entity.getAmount()));
         assertEquals("APPROVED", payment_entity.getStatus());
@@ -72,7 +72,7 @@ public class ShopTest {
         buttonProceed.click();
         error.shouldBe(Condition.visible, Duration.ofSeconds(15)).shouldHave(Condition.exactText("Банк отказал в проведении операции."));
         String payment_id = SQLHelper.paymentOrder();
-        DataHelper.Payment_entity payment_entity = SQLHelper.payment();
+        DataHelper.PaymentEntity payment_entity = SQLHelper.payment();
         assertEquals(payment_id, payment_entity.getId());
         assertEquals("45000", valueOf(payment_entity.getAmount()));
         assertEquals("DECLINED", payment_entity.getStatus());
@@ -132,7 +132,7 @@ public class ShopTest {
         buttonProceed.click();
         success.shouldBe(Condition.visible, Duration.ofSeconds(15)).shouldHave(Condition.exactText("Операция одобрена Банком."));
         String payment_id = SQLHelper.paymentOrder();
-        DataHelper.Payment_entity payment_entity = SQLHelper.payment();
+        DataHelper.PaymentEntity payment_entity = SQLHelper.payment();
         assertEquals(payment_id, payment_entity.getId());
         assertEquals("45000", valueOf(payment_entity.getAmount()));
         assertEquals("APPROVED", payment_entity.getStatus());
