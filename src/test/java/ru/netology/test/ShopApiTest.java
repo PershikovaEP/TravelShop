@@ -59,7 +59,7 @@ public class ShopApiTest {
     @Test
     public void shouldErrorWhenHolderCyrillic() {
         var card = new APIHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), DataHelper.generateValidDate().getMonth(),
-                DataHelper.generateValidDate().getYear(), DataHelper.generateNameCyrillic().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
+                DataHelper.generateValidDate().getYear(), DataHelper.generateNameCyrillic().getName(), DataHelper.generateCvcCode().getCode());
         given()
                 .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
@@ -73,7 +73,7 @@ public class ShopApiTest {
     @Test
     public void shouldErrorWhenInvalidNumberCard() {
         var card = new APIHelper.Card(DataHelper.getCardNumberInvalid().getNumber(), DataHelper.generateValidDate().getMonth(),
-                DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
+                DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(), DataHelper.generateCvcCode().getCode());
         given()
                 .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
@@ -87,7 +87,7 @@ public class ShopApiTest {
     @Test
     public void shouldErrorPastMonth() {
         var card = new APIHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), DataHelper.generatePastMonth().getMonth(),
-                DataHelper.generatePastMonth().getYear(), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
+                DataHelper.generatePastMonth().getYear(), DataHelper.generateValidName().getName(), DataHelper.generateCvcCode().getCode());
         given()
                 .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
@@ -101,7 +101,7 @@ public class ShopApiTest {
     @Test
     public void shouldErrorPastYear() {
         var card = new APIHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), DataHelper.generatePastYear().getMonth(),
-                DataHelper.generatePastYear().getYear(), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateCvcCode().getCode()));
+                DataHelper.generatePastYear().getYear(), DataHelper.generateValidName().getName(), DataHelper.generateCvcCode().getCode());
         given()
                 .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))
@@ -115,7 +115,7 @@ public class ShopApiTest {
     @Test
     public void shouldErrorInvalidCvcCode() {
         var card = new APIHelper.Card(DataHelper.getCardNumber("APPROVED").getNumber(), DataHelper.generateValidDate().getMonth(),
-                DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(), Integer.parseInt(DataHelper.generateInvalidCvcCode().getCode()));
+                DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(), DataHelper.generateInvalidCvcCode().getCode());
         given()
                 .spec(APIHelper.requestSpec())
                 .body(gson.toJson(card))

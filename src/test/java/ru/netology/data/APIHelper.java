@@ -28,13 +28,13 @@ public class APIHelper {
         String month;
         String year;
         String holder;
-        int cvc;
+        String cvc;
     }
 
     public static Card getCard(String status) {
         Card card = new Card(DataHelper.getCardNumber(status).getNumber(), DataHelper.generateValidDate().getMonth(),
                 DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(),
-                Integer.parseInt(DataHelper.generateCvcCode().getCode()));
+                DataHelper.generateCvcCode().getCode());
         return card;
     }
 

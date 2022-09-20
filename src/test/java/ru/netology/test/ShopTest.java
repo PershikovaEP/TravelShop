@@ -81,7 +81,7 @@ public class ShopTest {
         buyTour.fillHolder(DataHelper.generateValidName().getName());
         buyTour.fillCvc(DataHelper.generateCvcCode().getCode());
         buyTour.pressButtonProceed();
-        buyTour.errorTimeLimit();
+        buyTour.errorCardExpired();
     }
 
     //4. Покупка тура по карте с прошлым годом
@@ -166,12 +166,12 @@ public class ShopTest {
         BuyTour buyTour = new BuyTour();
         buyTour.pressButtonBuy();
         buyTour.fillNumberCard(DataHelper.getCardNumber("DECLINED").getNumber());
-        buyTour.fillMonth(DataHelper.invalidMonth());
-        buyTour.fillYear(DataHelper.generateValidDate().getYear());
+        buyTour.fillMonth(DataHelper.generateValidDate().getMonth());
+        buyTour.fillYear(DataHelper.generateInvalidDateFrom1Dijit().getYear());
         buyTour.fillHolder(DataHelper.generateValidName().getName());
         buyTour.fillCvc(DataHelper.generateCvcCode().getCode());
         buyTour.pressButtonProceed();
-        buyTour.errorCardExpired();
+        buyTour.errorWrongFormat();
     }
 
     //10. Покупка тура по карте с невалидным владельцем с использованием кириллицы
@@ -217,7 +217,6 @@ public class ShopTest {
     }
 
 //    13. Покупка тура по карте с внесением в поле владелец одной буквы на латинице
-
     @Test
     public void shouldErrorWhenHolderFor1Letter() {
         BuyTour buyTour = new BuyTour();
@@ -286,7 +285,6 @@ public class ShopTest {
     }
 
     //18. Покупка тура по карте с незаполенным полем владелец
-
     @Test
     public void shouldErrorWhenNotFilledHolder() {
         BuyTour buyTour = new BuyTour();
