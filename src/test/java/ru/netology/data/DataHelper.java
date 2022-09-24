@@ -143,6 +143,43 @@ public class DataHelper {
         String transaction_id;
     }
 
+    @Value
+    public static class Card {
+        String number;
+        String month;
+        String year;
+        String holder;
+        String cvc;
+    }
 
+    public static Card getCard (String status) {
+        Card card = new Card(DataHelper.getCardNumber(status).getNumber(), DataHelper.generateValidDate().getMonth(),
+                DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(),
+                DataHelper.generateCvcCode().getCode());
+        return card;
+    }
+    public static Card getCardInvalidHolder (String status, String holder) {
+        Card card = new Card(DataHelper.getCardNumber(status).getNumber(), DataHelper.generateValidDate().getMonth(),
+                DataHelper.generateValidDate().getYear(), holder, DataHelper.generateCvcCode().getCode());
+        return card;
+    }
+
+    public static Card getCardInvalidNumberCard (String number) {
+        Card card = new Card(number, DataHelper.generateValidDate().getMonth(),
+                DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(), DataHelper.generateCvcCode().getCode());
+        return card;
+    }
+
+    public static Card getCardInvalidTime (String status, String month, String year) {
+        Card card = new Card(DataHelper.getCardNumber(status).getNumber(), month,
+                year, DataHelper.generateValidName().getName(), DataHelper.generateCvcCode().getCode());
+        return card;
+    }
+
+    public static Card getCardInvalidCvc (String status, String cvc) {
+        Card card = new Card(DataHelper.getCardNumber(status).getNumber(), DataHelper.generateValidDate().getMonth(),
+                DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(), cvc);
+        return card;
+    }
 
 }

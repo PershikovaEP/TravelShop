@@ -1,15 +1,21 @@
 package ru.netology.data;
 
+import com.google.gson.Gson;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import lombok.Value;
 
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+
 public class APIHelper {
 
     private APIHelper() {
     }
+
+    static Gson gson = new Gson();
 
     public static RequestSpecification requestSpec() {
         RequestSpecification requestSpec = new RequestSpecBuilder()
@@ -22,20 +28,27 @@ public class APIHelper {
         return requestSpec;
     }
 
-    @Value
-    public static class Card {
-        String number;
-        String month;
-        String year;
-        String holder;
-        String cvc;
+    public static void buyTour(DataHelper.Card card, String status) {
+        given()
+                .spec(requestSpec())
+                .body(gson.toJson(card))
+                .when()
+                .post("/api/v1/pay")
+                .then()
+                .statusCode(200)
+                .body("status", equalTo(status));
     }
 
-    public static Card getCard(String status) {
-        Card card = new Card(DataHelper.getCardNumber(status).getNumber(), DataHelper.generateValidDate().getMonth(),
-                DataHelper.generateValidDate().getYear(), DataHelper.generateValidName().getName(),
-                DataHelper.generateCvcCode().getCode());
-        return card;
+    public static void errorBuyTour(DataHelper.Card card) {
+        given()
+                .spec(requestSpec())
+                .body(gson.toJson(card))
+                .when()
+                .post("/api/v1/pay")
+                .then()
+                .statusCode(400);
+
     }
+
 
 }

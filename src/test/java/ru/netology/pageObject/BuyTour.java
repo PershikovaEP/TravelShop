@@ -44,7 +44,7 @@ public class BuyTour {
     }
 
     public void error() {
-        $x("//*[contains(text(),'отказал в проведении операции')").shouldBe(Condition.visible,
+        $x("//*[contains(text(),'отказал в проведении операции')]").shouldBe(Condition.visible,
                 Duration.ofSeconds(15)).shouldHave(Condition.exactText("Банк отказал в проведении операции."));
     }
 

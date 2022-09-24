@@ -46,7 +46,7 @@ public class ShopTest {
         String payment_id = SQLHelper.paymentOrder();
         DataHelper.PaymentEntity payment_entity = SQLHelper.payment();
         assertEquals(payment_id, payment_entity.getId());
-        assertEquals("45000", valueOf(payment_entity.getAmount()));
+        assertEquals("45000", valueOf(payment_entity.getTransaction_id()));
         assertEquals("APPROVED", payment_entity.getStatus());
 
     }
@@ -66,7 +66,7 @@ public class ShopTest {
         String payment_id = SQLHelper.paymentOrder();
         DataHelper.PaymentEntity payment_entity = SQLHelper.payment();
         assertEquals(payment_id, payment_entity.getId());
-        assertEquals("45000", valueOf(payment_entity.getAmount()));
+        assertEquals("45000", valueOf(payment_entity.getTransaction_id()));
         assertEquals("DECLINED", payment_entity.getStatus());
     }
 
@@ -127,7 +127,7 @@ public class ShopTest {
         String payment_id = SQLHelper.paymentOrder();
         DataHelper.PaymentEntity payment_entity = SQLHelper.payment();
         assertEquals(payment_id, payment_entity.getId());
-        assertEquals("45000", valueOf(payment_entity.getAmount()));
+        assertEquals("45000", valueOf(payment_entity.getTransaction_id()));
         assertEquals("APPROVED", payment_entity.getStatus());
     }
 
