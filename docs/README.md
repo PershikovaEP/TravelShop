@@ -31,8 +31,8 @@
 1. В другом окне терминала IDEA или в командной строке запустить: java -jar artifacts/aqa-shop.jar
 1. Открыть DBeaver и подключить соединение с базой данных, введя название базы данных: shop, user: app, password: pass, port: 3306.
 1. Открыть в браузере http://localhost:8080/
-1. Запустить тесты в терминале IDEA ./gradlew clean test
-1. Запустить отчет Allure в терминале IDEA ./gradlew allureServe
+1. Запустить тесты в терминале IDEA, введя команду ./gradlew clean test
+1. Запустить отчет Allure в терминале IDEA, введя команду ./gradlew allureServe
 
 
 ## Лицензия
