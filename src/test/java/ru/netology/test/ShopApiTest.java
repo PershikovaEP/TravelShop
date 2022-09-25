@@ -37,8 +37,8 @@ public class ShopApiTest {
         APIHelper.buyTour(card, status);
         String payment_id = SQLHelper.paymentOrder();
         DataHelper.PaymentEntity payment_entity = SQLHelper.payment();
-        assertEquals(payment_id, payment_entity.getId());
-        assertEquals("45000", valueOf(payment_entity.getTransaction_id()));
+        assertEquals(payment_id, payment_entity.getTransaction_id());
+        assertEquals("45000", valueOf(payment_entity.getAmount()));
         assertEquals(status, payment_entity.getStatus());
     }
 
@@ -50,8 +50,8 @@ public class ShopApiTest {
         APIHelper.buyTour(card,status);
         String payment_id = SQLHelper.paymentOrder();
         DataHelper.PaymentEntity payment_entity = SQLHelper.payment();
-        assertEquals(payment_id, payment_entity.getId());
-        assertEquals("45000", valueOf(payment_entity.getTransaction_id()));
+        assertEquals(payment_id, payment_entity.getTransaction_id());
+        assertEquals("45000", valueOf(payment_entity.getAmount()));
         assertEquals("DECLINED", payment_entity.getStatus());
     }
 
@@ -177,8 +177,8 @@ public class ShopApiTest {
         APIHelper.buyTour(card, status);
         String payment_id = SQLHelper.paymentOrder();
         DataHelper.PaymentEntity payment_entity = SQLHelper.payment();
-        assertEquals(payment_id, payment_entity.getId());
-        assertEquals("45000", valueOf(payment_entity.getTransaction_id()));
+        assertEquals(payment_id, payment_entity.getTransaction_id());
+        assertEquals("45000", valueOf(payment_entity.getAmount()));
         assertEquals(status, payment_entity.getStatus());
     }
 
